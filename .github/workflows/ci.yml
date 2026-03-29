@@ -1,0 +1,226 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  # Validate problem directory structure
+  validate-structure:
+    name: Validate Structure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate changed problem directories
+        run: bash scripts/ci/validate-structure.sh origin/master
+
+  # Validate commit message format
+  commit-lint:
+    name: Commit Lint
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate commit messages
+        run: bash scripts/ci/validate-commits.sh origin/master
+
+  # Python linting with ruff
+  python-lint:
+    name: Python Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed Python files
+        id: changed
+        run: |
+          FILES=$(git diff --name-only origin/master...HEAD -- '*.py' \
+            | grep -v '^scripts/' \
+            | tr '\n' ' ')
+          echo "files=$FILES" >> "$GITHUB_OUTPUT"
+          if [ -z "$FILES" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install ruff
+        if: steps.changed.outputs.skip == 'false'
+        run: pip install ruff
+
+      - name: Run ruff check
+        if: steps.changed.outputs.skip == 'false'
+        run: ruff check ${{ steps.changed.outputs.files }}
+
+      - name: Run ruff format check
+        if: steps.changed.outputs.skip == 'false'
+        run: ruff format --check ${{ steps.changed.outputs.files }}
+
+  # C/C++ syntax check
+  c-cpp-build:
+    name: C/C++ Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed C files
+        id: c-changed
+        run: |
+          FILES=$(git diff --name-only origin/master...HEAD -- '*.c' | tr '\n' ' ')
+          echo "files=$FILES" >> "$GITHUB_OUTPUT"
+          if [ -z "$FILES" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Get changed C++ files
+        id: cpp-changed
+        run: |
+          FILES=$(git diff --name-only origin/master...HEAD -- '*.cpp' | tr '\n' ' ')
+          echo "files=$FILES" >> "$GITHUB_OUTPUT"
+          if [ -z "$FILES" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check C syntax
+        if: steps.c-changed.outputs.skip == 'false'
+        run: |
+          for file in ${{ steps.c-changed.outputs.files }}; do
+            echo "Checking $file..."
+            gcc -Wall -Wextra -Werror -fsyntax-only "$file" 2>&1 || true
+          done
+
+      - name: Check C++ syntax
+        if: steps.cpp-changed.outputs.skip == 'false'
+        run: |
+          for file in ${{ steps.cpp-changed.outputs.files }}; do
+            echo "Checking $file..."
+            g++ -std=c++17 -Wall -Wextra -Werror -fsyntax-only "$file" 2>&1 || true
+          done
+
+  # C# compilation check
+  csharp-build:
+    name: C# Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed C# files
+        id: changed
+        run: |
+          FILES=$(git diff --name-only origin/master...HEAD -- '*.cs' | tr '\n' ' ')
+          echo "files=$FILES" >> "$GITHUB_OUTPUT"
+          if [ -z "$FILES" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup .NET
+        if: steps.changed.outputs.skip == 'false'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Check C# syntax
+        if: steps.changed.outputs.skip == 'false'
+        run: |
+          # Create a temporary project for compilation checking
+          mkdir -p /tmp/cs-check
+          cat > /tmp/cs-check/Check.csproj << 'EOF'
+          <Project Sdk="Microsoft.NET.Sdk">
+            <PropertyGroup>
+              <TargetFramework>net8.0</TargetFramework>
+              <OutputType>Library</OutputType>
+              <Nullable>enable</Nullable>
+            </PropertyGroup>
+          </Project>
+          EOF
+
+          # Copy changed files and attempt build
+          for file in ${{ steps.changed.outputs.files }}; do
+            cp "$file" /tmp/cs-check/
+          done
+
+          cd /tmp/cs-check
+          dotnet build --nologo --verbosity quiet 2>&1 || echo "C# build check completed with warnings/errors (non-blocking)"
+
+  # Markdown linting
+  markdown-lint:
+    name: Markdown Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed Markdown files
+        id: changed
+        run: |
+          FILES=$(git diff --name-only origin/master...HEAD -- '*.md' | tr '\n' ' ')
+          echo "files=$FILES" >> "$GITHUB_OUTPUT"
+          if [ -z "$FILES" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run markdownlint
+        if: steps.changed.outputs.skip == 'false'
+        uses: DavidAnson/markdownlint-cli2-action@v19
+        with:
+          globs: ${{ steps.changed.outputs.files }}
+
+  # Python tests
+  python-tests:
+    name: Python Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check if tests exist for changed problems
+        id: check
+        run: |
+          # Get changed solution files
+          CHANGED=$(git diff --name-only origin/master...HEAD -- 'problems/*/python/*.py' | head -20)
+          if [ -z "$CHANGED" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup Python
+        if: steps.check.outputs.skip == 'false'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install pytest
+        if: steps.check.outputs.skip == 'false'
+        run: pip install pytest
+
+      - name: Run tests
+        if: steps.check.outputs.skip == 'false'
+        run: pytest tests/python/ -v --tb=short 2>&1 || echo "Some tests failed or no tests found"

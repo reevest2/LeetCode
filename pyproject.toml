@@ -1,0 +1,29 @@
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "W",   # pycodestyle warnings
+    "I",   # isort (import sorting)
+    "UP",  # pyupgrade (modern syntax)
+    "B",   # bugbear (common bugs)
+    "SIM", # simplify (unnecessary complexity)
+    "RUF", # ruff-specific rules
+]
+ignore = [
+    "E741", # ambiguous variable name (needed for algorithm variable names)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/*" = ["E501"] # allow long lines in generation scripts
+
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.pytest.ini_options]
+testpaths = ["tests/python"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
