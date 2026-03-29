@@ -19,7 +19,67 @@
 section .text
 global two_sum
 
+; int* two_sum(int* nums, int numsSize, int target, int* returnSize)
+; Args: rdi=nums, rsi=numsSize, rdx=target, rcx=returnSize
 two_sum:
-    ; TODO: implement
-    xor eax, eax       ; return 0
+    push    rbx
+    push    r12
+    push    r13
+    push    r14
+    push    r15
+
+    mov     r12, rdi            ; r12 = nums
+    mov     r13d, esi           ; r13d = numsSize
+    mov     r14d, edx           ; r14d = target
+    mov     r15, rcx            ; r15 = returnSize
+
+    ; Outer loop: i = 0
+    xor     ebx, ebx            ; ebx = i
+.outer:
+    cmp     ebx, r13d
+    jge     .not_found
+
+    ; Inner loop: j = i + 1
+    lea     ecx, [ebx + 1]     ; ecx = j
+.inner:
+    cmp     ecx, r13d
+    jge     .next_i
+
+    ; Check if nums[i] + nums[j] == target
+    movsxd  rax, ebx
+    mov     eax, [r12 + rax*4]  ; eax = nums[i]
+    movsxd  rdx, ecx
+    add     eax, [r12 + rdx*4]  ; eax = nums[i] + nums[j]
+    cmp     eax, r14d
+    je      .found
+
+    inc     ecx
+    jmp     .inner
+
+.next_i:
+    inc     ebx
+    jmp     .outer
+
+.found:
+    ; Allocate 2 ints (8 bytes) via malloc
+    push    rcx                 ; save j
+    mov     edi, 8
+    call    malloc wrt ..plt
+    pop     rcx                 ; restore j
+
+    mov     [rax], ebx          ; result[0] = i
+    mov     [rax + 4], ecx      ; result[1] = j
+    mov     dword [r15], 2      ; *returnSize = 2
+    jmp     .done
+
+.not_found:
+    xor     eax, eax            ; return NULL
+    mov     dword [r15], 0      ; *returnSize = 0
+
+.done:
+    pop     r15
+    pop     r14
+    pop     r13
+    pop     r12
+    pop     rbx
     ret
