@@ -2,7 +2,7 @@
 
 This document teaches the git practices used in this repository. These practices are drawn from how major open source projects (Linux kernel, Rust, Git itself) manage contributions, adapted for this project's scope.
 
-Read this guide once, refer back to specific sections as needed.
+Read this guide once, refer back to specific sections as needed. For the higher-level contribution process (what we accept, PR requirements, review standards), see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Table of Contents
 

@@ -111,17 +111,18 @@ def twoSum(self, nums: list[int], target: int) -> list[int]:
 
 ## Naming
 
-### Rules
+Names should describe what a value represents, not its type or a generic label. A reader should understand a variable's purpose without reading surrounding code.
 
-| Element | Convention | Example |
-|---------|-----------|---------|
-| Variables | Descriptive, lowercase | `left_bound`, `max_profit`, `seen` |
-| Loop counters | Single letter OK | `i`, `j`, `k` |
-| Size/length | `n`, `m` OK when obvious | `n = len(nums)` |
-| Pointers | `left`, `right`, `slow`, `fast` | Not `l`, `r`, `s`, `f` |
-| Hash maps | Name describes content | `char_count`, `index_map` | Not `d`, `mp`, `m` |
-| Booleans | Reads as a question | `is_valid`, `has_cycle` | Not `flag`, `check` |
-| Results | Name describes what it holds | `max_length`, `result` | Not `ans`, `res`, `ret` |
+For language-specific naming conventions (snake_case vs camelCase, etc.), see [STYLE_GUIDE.md](STYLE_GUIDE.md).
+
+### Principles
+
+- **Variables**: Name describes the content (`complement`, `max_profit`, `seen`). Not a generic label.
+- **Loop counters**: `i`, `j`, `k` are fine. `n` for size, `m` for rows/cols when obvious.
+- **Pointers**: `left`, `right`, `slow`, `fast`. Not single letters (`l`, `r`, `s`, `f`).
+- **Hash maps**: Name describes content (`char_count`, `index_map`). Not `d` or `mp`.
+- **Booleans**: Read as a question (`is_valid`, `has_cycle`). Not `flag` or `check`.
+- **Results**: Name what it holds (`max_length`, `result`). Not `ans`, `res`, `ret`.
 
 ### Forbidden Names
 
@@ -316,3 +317,9 @@ Before submitting a PR, run through this verification checklist:
 ---
 
 **Remember:** This is an educational repository. Every solution teaches someone. Write code you would be proud to present in a technical interview or a classroom.
+
+## See Also
+
+- [STYLE_GUIDE.md](STYLE_GUIDE.md) -- Formatting, indentation, naming conventions (snake_case vs camelCase), and annotated code examples per language
+- [CONTRIBUTING.md](CONTRIBUTING.md) -- Contribution workflow, PR process, and solution requirements
+- [GIT_WORKFLOW.md](GIT_WORKFLOW.md) -- Commit message format and git practices
