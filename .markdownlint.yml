@@ -1,0 +1,17 @@
+# Markdownlint configuration
+
+# Disable line length (study guides have legitimately long lines)
+MD013: false
+
+# Allow inline HTML (needed for GitHub collapsible sections)
+MD033: false
+
+# Allow non-heading first line (some files start with frontmatter or comments)
+MD041: false
+
+# Allow duplicate headings in different sections (common in study guides)
+MD024:
+  siblings_only: true
+
+# Allow trailing punctuation in headings (e.g., "When NOT to Use?")
+MD026: false
