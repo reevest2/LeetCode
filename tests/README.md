@@ -95,6 +95,10 @@ class TestProblemName:
         assert self.solution.methodName([], 0) == []
 ```
 
+## Test Code Standards
+
+Test code follows the same quality standards as solution code. See [CODE_QUALITY.md](../CODE_QUALITY.md) for naming rules and prohibited practices, and [STYLE_GUIDE.md](../STYLE_GUIDE.md) for formatting conventions.
+
 ## Assembly and C# Tests
 
 Assembly tests are not included due to cross-compilation complexity. C# tests via xUnit/NUnit are planned but not yet scaffolded. Contributions welcome -- open an issue to discuss the approach first.

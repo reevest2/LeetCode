@@ -132,7 +132,7 @@ class Solution:
 | Constants | UPPER_SNAKE | `MOD = 10**9 + 7` |
 | Classes | PascalCase | `Solution`, `ListNode` |
 
-Note: Method names follow LeetCode's camelCase convention to match the expected interface.
+Note: Method names follow LeetCode's camelCase convention to match the expected interface. For forbidden variable names and naming philosophy, see [CODE_QUALITY.md](CODE_QUALITY.md#naming).
 
 ## C Sharp
 
@@ -486,3 +486,9 @@ not_found:
 ---
 
 **Consistency is the priority.** When in doubt, look at existing solutions for precedent. If no precedent exists, open an issue to discuss before establishing a new pattern.
+
+## See Also
+
+- [CODE_QUALITY.md](CODE_QUALITY.md) -- Naming philosophy, forbidden variable names, readability rules, prohibited practices, and edge case requirements
+- [CONTRIBUTING.md](CONTRIBUTING.md) -- Contribution workflow and solution requirements
+- [GIT_WORKFLOW.md](GIT_WORKFLOW.md) -- Commit message format and git practices

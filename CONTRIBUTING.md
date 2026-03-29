@@ -57,18 +57,7 @@ cd LeetCode
 
 ### 2. Create a Branch
 
-Branch names must follow this format:
-
-```
-<type>/<problem-number>-<short-description>
-
-# Examples:
-solve/0001-two-sum-python
-fix/0042-trapping-rain-water-cpp
-docs/0015-3sum-study-guide
-```
-
-Valid types: `solve`, `fix`, `docs`, `feat`, `chore`
+Branch names follow the format `<type>/<problem-number>-<description>`. See [GIT_WORKFLOW.md](GIT_WORKFLOW.md#3-the-feature-branch-workflow) for the full naming convention, valid types, and examples.
 
 ### 3. Make Your Changes
 
@@ -84,52 +73,9 @@ Valid types: `solve`, `fix`, `docs`, `feat`, `chore`
 
 ## Commit Standards
 
-### Message Format
+Commit messages follow the format `<type>(<scope>): <description>`.
 
-```
-<type>(<scope>): <description>
-
-[optional body]
-[optional footer]
-```
-
-### Types
-
-| Type | Usage |
-|------|-------|
-| `solve` | Implementing a solution |
-| `fix` | Fixing a bug in an existing solution |
-| `docs` | Documentation changes only |
-| `style` | Formatting, whitespace (no logic changes) |
-| `refactor` | Restructuring without changing behavior |
-| `test` | Adding or modifying tests |
-| `chore` | Build scripts, CI, tooling |
-
-### Rules
-
-- Use the imperative mood: "add solution" not "added solution" or "adds solution"
-- Do not capitalize the first letter of the description
-- No period at the end
-- Limit the subject line to 72 characters
-- Separate subject from body with a blank line
-- Reference issue numbers in the footer: `Closes #42`
-
-### Examples
-
-```
-solve(0001): implement two sum in python
-
-One-pass hash map approach. O(n) time, O(n) space.
-
-Closes #10
-```
-
-```
-fix(0042): correct off-by-one in trapping rain water c++ solution
-
-The right pointer was initialized to nums.size() instead of
-nums.size() - 1, causing out-of-bounds access on empty input.
-```
+See [GIT_WORKFLOW.md](GIT_WORKFLOW.md#4-writing-good-commits) for the full format specification, valid types, rules, good/bad examples, and the "future you" test.
 
 ## Pull Request Process
 
@@ -151,7 +97,7 @@ Before submitting, verify:
 - [ ] Code follows [STYLE_GUIDE.md](STYLE_GUIDE.md) conventions
 - [ ] Existing header comments (problem link, pattern, hints) are preserved
 - [ ] No debug output, commented-out code, or TODOs left behind
-- [ ] Commit messages follow the format specified above
+- [ ] Commit messages follow the format in [GIT_WORKFLOW.md](GIT_WORKFLOW.md#4-writing-good-commits)
 - [ ] PR description is complete and accurate
 
 ## Review Process
@@ -211,3 +157,10 @@ Study guides follow a strict structure. Do not deviate from it:
 - **Want to add a new language?** Open an issue to discuss feasibility and maintenance burden first.
 
 We want contributors to succeed. Ask questions early rather than submitting work that does not meet standards.
+
+## See Also
+
+- [GIT_WORKFLOW.md](GIT_WORKFLOW.md) -- Branching, rebasing, commit signing, conflict resolution, and advanced git topics
+- [CODE_QUALITY.md](CODE_QUALITY.md) -- Correctness, complexity, readability, naming philosophy, and prohibited practices
+- [STYLE_GUIDE.md](STYLE_GUIDE.md) -- Formatting, indentation, naming conventions, and annotated code examples per language
+- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) -- Community standards and enforcement
