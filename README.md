@@ -1,6 +1,14 @@
 # LeetCode Solutions
 
-Solutions in **C#** and **Python**.
+Solutions in **C#**, **Python**, **C**, **C++**, **x86-64 Assembly**, **ARM64 Assembly**, and **RISC-V Assembly**.
+
+Each problem includes a full study guide with:
+- Problem statement and key insight
+- Pattern explanation (when to use, when NOT to use, alternatives)
+- Brute force vs optimal approach
+- Common pitfalls and interview tips
+- Related problems
+- Solution templates with hints in all 7 languages
 
 ## Progress
 
