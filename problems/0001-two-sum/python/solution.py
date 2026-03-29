@@ -8,10 +8,16 @@
 #   3. Check if the complement already exists before storing
 #
 # Brute Force: Check all pairs with two nested loops. O(n^2) time, O(1) space.
-# Optimal: One-pass hash map: for each num, check if (target - num) exists in map. If yes, return both indices. If no, add num to map. O(n) time, O(n) space.
+# Optimal: One-pass hash map: for each num, check if (target - num)
+#   exists in map. If yes, return indices. If no, store num. O(n)/O(n).
 
 
 class Solution:
     def twoSum(self, nums: list[int], target: int) -> list[int]:
-        # TODO: implement
-        pass
+        seen = {}
+        for i, num in enumerate(nums):
+            complement = target - num
+            if complement in seen:
+                return [seen[complement], i]
+            seen[num] = i
+        return []
