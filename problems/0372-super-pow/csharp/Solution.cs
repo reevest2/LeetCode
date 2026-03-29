@@ -1,0 +1,6 @@
+// 372. Super Pow
+// https://leetcode.com/problems/super-pow/
+
+public class Solution
+{
+}

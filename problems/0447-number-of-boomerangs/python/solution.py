@@ -1,0 +1,5 @@
+# 447. Number of Boomerangs
+# https://leetcode.com/problems/number-of-boomerangs/
+
+class Solution:
+    pass

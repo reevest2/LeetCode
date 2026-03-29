@@ -1,0 +1,5 @@
+# 355. Design Twitter
+# https://leetcode.com/problems/design-twitter/
+
+class Solution:
+    pass

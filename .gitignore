@@ -1,0 +1,23 @@
+# C#
+bin/
+obj/
+*.user
+*.suo
+*.sln.docstates
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.swp
+
+# OS
+Thumbs.db
+.DS_Store

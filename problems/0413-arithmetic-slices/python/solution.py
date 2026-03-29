@@ -1,0 +1,5 @@
+# 413. Arithmetic Slices
+# https://leetcode.com/problems/arithmetic-slices/
+
+class Solution:
+    pass
