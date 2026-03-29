@@ -1,0 +1,55 @@
+# Line ending normalization
+* text=auto eol=lf
+
+# Source files
+*.py        text eol=lf diff=python
+*.cs        text eol=lf diff=csharp
+*.c         text eol=lf diff=cpp
+*.cpp       text eol=lf diff=cpp
+*.h         text eol=lf diff=cpp
+*.hpp       text eol=lf diff=cpp
+*.asm       text eol=lf
+*.s         text eol=lf
+
+# Documentation
+*.md        text eol=lf
+*.txt       text eol=lf
+
+# Configuration
+*.yml       text eol=lf
+*.yaml      text eol=lf
+*.json      text eol=lf
+*.toml      text eol=lf
+*.cfg       text eol=lf
+*.ini       text eol=lf
+*.editorconfig text eol=lf
+
+# Scripts
+*.sh        text eol=lf
+*.bash      text eol=lf
+*.ps1       text eol=lf
+
+# Git
+.gitattributes text eol=lf
+.gitignore  text eol=lf
+
+# Binary files
+*.xlsx      binary
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.gif       binary
+*.pdf       binary
+*.exe       binary
+*.dll       binary
+*.so        binary
+*.a         binary
+*.o         binary
+*.obj       binary
+*.pyc       binary
+
+# Linguist overrides
+# Prevent study guide READMEs from inflating Markdown percentage
+problems/*/README.md    linguist-documentation
+# Mark generation scripts as vendored
+scripts/generate.py     linguist-vendored
