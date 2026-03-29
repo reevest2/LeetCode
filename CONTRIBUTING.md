@@ -22,8 +22,9 @@ Read this entire document before submitting your first contribution.
 1. **Read the [Code of Conduct](CODE_OF_CONDUCT.md).** We enforce it.
 2. **Read the [Code Quality Standards](CODE_QUALITY.md).** Every solution must meet them.
 3. **Read the [Style Guide](STYLE_GUIDE.md).** Consistency is non-negotiable.
-4. **Check existing issues and PRs** to avoid duplicate work.
-5. **Open an issue first** for new problems or significant changes. Do not start work without alignment.
+4. **Read the [Git Workflow Guide](GIT_WORKFLOW.md).** Covers branching, rebasing, commit signing, conflict resolution, and the full contribution flow with exact commands.
+5. **Check existing issues and PRs** to avoid duplicate work.
+6. **Open an issue first** for new problems or significant changes. Do not start work without alignment.
 
 ## What We Accept
 
